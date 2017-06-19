@@ -10,6 +10,17 @@ category: Erlang
 
 <!-- more -->
 
+### init/1
+supervisor行为的回调函数。如果一个模块申明了-behaviour(supervisor).行为(不是必需)或者是作为supervisor的回调模块，则需要实现并导出init/1回调函数。
+``` Erlang
+-callback init(Args :: term()) ->
+    {ok, {{RestartStrategy :: strategy(),
+           MaxR            :: non_neg_integer(),
+           MaxT            :: non_neg_integer()},
+           [ChildSpec :: child_spec()]}}
+    | ignore.
+```
+
 ### start_link/2;start_link/3
 启动supervisor进程，对应调用的是gen_server:start_link/3;gen_server_start_link/4。gen_server回调模块为supervisor，回调函数为init/1，init的参数为start_link的参数, 定义supervisor进程注册名（可忽略），回调模块和回调参数。gen_server回调函数init/1调用supervisor定义的回调模块对应的回调函数（Mod:init/1），然后初始化state，SupFlags包括三个参数，为{Strategy（重启策略）, MaxIntensity（一定时间内子进程重启次数）, Period（一定时间，单位为秒）}，如果StartSpec指明有child子进程，则启动。
 ``` Erlang
