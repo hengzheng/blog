@@ -10,8 +10,8 @@ category: Erlang
 
 <!-- more -->
 
-### init/1
-supervisor行为的回调函数。如果一个模块申明了-behaviour(supervisor).行为(不是必需)或者是作为supervisor的回调模块，则需要实现并导出init/1回调函数。
+### 回调函数
+supervisor行为的回调函数只有一个，如果一个模块申明了-behaviour(supervisor).行为(不是必需)或者是作为supervisor的回调模块，则需要实现并导出init/1回调函数。
 ``` Erlang
 -callback init(Args :: term()) ->
     {ok, {{RestartStrategy :: strategy(),
